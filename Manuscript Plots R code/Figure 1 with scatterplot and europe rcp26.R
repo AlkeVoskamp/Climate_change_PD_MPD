@@ -18,14 +18,14 @@ library(rgdal)
 library(RColorBrewer)
 library(colorspace)
 
-#-#-# Get the data #-#-#
+
+#-#-# Get the results from the analysi and assemble the dataframe #-#-#
 setwd("E:/PD analysis/Second analysis non random loss win/Result files random PD change/")
-#setwd("/Users/alkevoskamp/Documents/PD manuscript/")
 RPDchange <- read.csv("PDandMPD_random_changes_disp2_rcp26_2080_RC.csv")
 head(RPDchange)
 str(RPDchange)
 
-## Missing cells
+## Merge in the missing cells to the final dataframe
 Mdata <- read.csv("E:/PD analysis/Second analysis non random loss win/Result files random PD change/PD_SR_MPD_values_missing_cells_to_complete_maps_Disp2_rcp26_80.csv")
 #Mdata <- read.csv("/Users/alkevoskamp/Documents/PD manuscript/PD_SR_MPD_values_missing_cells_to_complete_maps_Disp2_rcp26_80.csv")
 RPDchange <- rbind(RPDchange,Mdata)
@@ -50,7 +50,7 @@ RPDchangeC3 <- rbind(RPDchangeC1,RPDchangeC2) ##Merge the two dataframes back to
 RPDchange <- RPDchangeC3
 
 
-## Continent data
+## Add the continent data 
 ConData <- get(load("Continents_gridded_05.Rdata"))
 head(ConData)
 colnames(ConData) <-c("x","y","Continent")
@@ -65,7 +65,7 @@ ConData$Continent[ConData$Continent == 8] <- "South America"
 
 CombCon <- merge(RPDchange,ConData,by=c("x","y"))
 
-## Realm data 
+## Add the realm data 
 realm <- read.csv("E:/PD analysis/Realm_coordinates_Lat_Lon.csv")
 #realm <- read.csv("/Users/alkevoskamp/Documents/Legacy Landscapes/Site selection analysis/Other files/Realm_coordinates_Lat_Lon.csv")
 realm <- realm[c(2,3,4)]
