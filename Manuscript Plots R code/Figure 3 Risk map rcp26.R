@@ -59,10 +59,10 @@ SRscatter <- ggplot(CombConSc,aes(x=PDpropChange,y=MPDpropChange,col=Risk_catego
   annotate("rect",xmin = 0, xmax = 200, ymin = -35, ymax = 0, fill = "indianred1", alpha = 0.8)+
   annotate("rect",xmin = 0, xmax = 200, ymin = 0, ymax = 40, fill = "yellow2", alpha = 0.8)+
   annotate("rect",xmin = -200, xmax = 0, ymin = 0, ymax = 40, fill = "turquoise1", alpha = 0.8)+
-  annotate("text", x = 100, y = 30, label = "Increasing\ndiversification", colour = "black",size=9)+
-  annotate("text", x = 100, y = -25, label = "Increasing\nclustering", colour = "black",size=9)+
-  annotate("text", x = -100, y = -25, label = "Increasing\nhomogenisation", colour = "black",size=9)+
-  annotate("text", x = -100, y = 30, label = "Increasing\noverdispersion", colour = "black",size=9)+
+  annotate("text", x = 100, y = 30, label = "Increasing\ndiversification", colour = "black",size=7)+
+  annotate("text", x = 100, y = -25, label = "Increasing\nclustering", colour = "black",size=7)+
+  annotate("text", x = -100, y = -25, label = "Increasing\nhomogenisation", colour = "black",size=7)+
+  annotate("text", x = -100, y = 30, label = "Increasing\noverdispersion", colour = "black",size=7)+
   geom_point(alpha = 1,shape=1) +
   theme(panel.background = element_blank(),
         axis.text.x = element_text(size=22),
@@ -75,7 +75,7 @@ SRscatter <- ggplot(CombConSc,aes(x=PDpropChange,y=MPDpropChange,col=Risk_catego
   guides(colour = guide_legend(override.aes = list(size=8,fill=NA)))+
   geom_hline(yintercept=0, linetype="dashed", color= "black")+
   geom_vline(xintercept=0, linetype="dashed", color= "black")+
-  labs(x="% change in PD\n", y="\n% change in MPD", title="")+
+  labs(x="% change in Faith PD\n", y="\n% change in MPD", title="")+
   ggtitle("(a)")+ 
   theme(plot.title = element_text(size = 21,face="bold",hjust = 0))
 plot(SRscatter)
@@ -191,7 +191,7 @@ plot(BarPlot)
 #-#-# Combine 3 plots #-#-#
 FinalComb <- grid.arrange(
   arrangeGrob(SRscatter,RiskMap,
-              widths = c(6,8),
+              widths = c(4,8),
               heights = c(1),
               ncol = 2,
               nrow = 1),
@@ -200,10 +200,10 @@ FinalComb <- grid.arrange(
               heights = c(8),
               ncol = 1,
               nrow = 1),
-  nrow=2, ncol =1, heights=c(4,1)
+  nrow=2, ncol =1, heights=c(4,2)
 )
 plot(FinalComb)
 
 
 setwd("/Users/alkevoskamp/Documents/PD manuscript/Manuscript Figures/")
-ggsave("Figure 3 PD vs MPD change map rcp26.tiff",FinalComb,width=20, height=10, unit="in", dpi=600, bg="transparent")
+ggsave("Figure 3 PD vs MPD change map rcp26.tiff",FinalComb,width=18, height=8, unit="in", dpi=600, bg="transparent")
