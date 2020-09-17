@@ -71,7 +71,7 @@ plot1<- ggplot(data=PDRLoss, aes(y=y, x=x)) +
   labs(x="", y="", title="")+ # Remove axis titles
   theme(axis.ticks.y = element_blank(),axis.text.y = element_blank(), # Get rid of axis ticks/text
         axis.ticks.x = element_blank(),axis.text.x = element_blank())+
-  ggtitle("(a)                      Change through species loss")+ 
+  ggtitle("(a)                                    Change through species loss")+ 
   theme(plot.title = element_text(size = 26,face="bold",hjust = 0))
 
 print(plot1)
@@ -114,7 +114,7 @@ plot2<- ggplot(data=PDRGain, aes(y=y, x=x)) +
   labs(x="", y="", title="")+ # Remove axis titles
   theme(axis.ticks.y = element_blank(),axis.text.y = element_blank(), # Get rid of axis ticks/text
         axis.ticks.x = element_blank(),axis.text.x = element_blank())+
-  ggtitle("(b)                      Change through species gain")+ 
+  ggtitle("(b)                                      Change through species gain")+ 
   theme(plot.title = element_text(size = 26,face="bold",hjust = 0))
 
 print(plot2)
@@ -245,5 +245,5 @@ plot(CombNull)
 
 
 setwd("/Users/alkevoskamp/Documents/PD manuscript/Manuscript Figures/")
-ggsave("Figure 4 Random_PD and_MPD_change_rcp26_significant_cells.tiff",CombNull,width=35, height=14, unit="in", dpi=300, bg="transparent")
+ggsave("Figure 4 Random_PD and_MPD_change_rcp26_significant_cells.tiff",CombNull,width=35, height=13, unit="in", dpi=300, bg="transparent")
 
