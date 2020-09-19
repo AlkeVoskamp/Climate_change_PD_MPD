@@ -6,7 +6,7 @@
 
 
 #-#-# Get the dataframe #-#-#
-data <- read.csv("PDandMPD_random_changes_disp2_rcp26_2080_Final.csv")
+data <- read.csv("PDandMPD_random_changes_disp2_rcp60_2080_Final.csv")
 head(data)
 
 
@@ -72,7 +72,7 @@ head(RiskCat)
 nrow(RiskCat)
 
 ## Set the continent
-c <- "South America" #"North America" # "Europe" "Australia" "Asia" "Africa"  
+c <- "North America" #"South America" "Europe" "Australia" "Asia" "Africa"  
 OneContinent <- subset(RiskCat,Continent == c)  
 #OneContinent <- subset(RiskCat,Continent == "Africa"|Continent == "Asia"|Continent == "Australia"|Continent == "Europe"|Continent == "North America"|Continent == "South America")
 TotalCellsContinent <- nrow(OneContinent)
@@ -118,8 +118,8 @@ print(LessLossPDOutLessGainPDInPerc)
 
 ## Subset to significant cells MPD change
 ## MORE decrease through species loss and LESS increase through species gain
-MoreLossMPDOut <- subset(OneContinent, MPDOutPvalue >= 0.95)
-LessGainMPDIn <- subset(OneContinent, MPDInPvalue <= 0.05)
+MoreLossMPDOut <- subset(OneContinent, MPDOutPvalue >= 0.8)
+LessGainMPDIn <- subset(OneContinent, MPDInPvalue <= 0.2)
 LessGainMPDInMoreLossMPDOut <- merge(LessGainMPDIn,MoreLossMPDOut,by=c("x","y"))
 LessGainMPDInMoreLossMPDOutArea <- sum(LessGainMPDInMoreLossMPDOut$Area_km.x)
 LessGainMPDInMoreLossMPDOutPerc <- nrow(LessGainMPDInMoreLossMPDOut)/(TotalCellsContinent/100)
@@ -127,8 +127,8 @@ print(LessGainMPDInMoreLossMPDOutArea)
 print(LessGainMPDInMoreLossMPDOutPerc)
 
 ## MORE decrease through species loss and MORE increase through species gain
-MoreLossMPDOut <- subset(OneContinent, MPDOutPvalue >= 0.95)
-MoreGainMPDIn <- subset(OneContinent, MPDInPvalue <= 0.95)
+MoreLossMPDOut <- subset(OneContinent, MPDOutPvalue >= 0.8)
+MoreGainMPDIn <- subset(OneContinent, MPDInPvalue <= 0.8)
 MoreGainMPDInMoreLossMPDOut <- merge(MoreGainMPDIn,MoreLossMPDOut,by=c("x","y"))
 MoreGainMPDInMoreLossMPDOutArea <- sum(MoreGainMPDInMoreLossMPDOut$Area_km.x)
 MoreGainMPDInMoreLossMPDOutPerc <- nrow(MoreGainMPDInMoreLossMPDOut)/(TotalCellsContinent/100)
@@ -136,8 +136,8 @@ print(MoreGainMPDInMoreLossMPDOutArea)
 print(MoreGainMPDInMoreLossMPDOutPerc)
 
 ## LESS decrease through species loss and MORE increase through species gain
-LessLossMPDOut <- subset(OneContinent, MPDOutPvalue <= 0.05)
-MoreGainMPDIn <- subset(OneContinent, MPDInPvalue <= 0.95)
+LessLossMPDOut <- subset(OneContinent, MPDOutPvalue <= 0.2)
+MoreGainMPDIn <- subset(OneContinent, MPDInPvalue <= 0.8)
 LessLossMPDOutMoreGainMPDIn <- merge(LessLossMPDOut,MoreGainMPDIn,by=c("x","y"))
 LessLossMPDOutMoreGainMPDInArea <- sum(LessLossMPDOutMoreGainMPDIn$Area_km.x)
 LessLossMPDOutMoreGainMPDInPerc <- nrow(LessLossMPDOutMoreGainMPDIn)/(TotalCellsContinent/100)
@@ -145,8 +145,8 @@ print(LessLossMPDOutMoreGainMPDInArea)
 print(LessLossMPDOutMoreGainMPDInPerc)
 
 ## LESS decrease through species loss and LESS increase through species gain
-LessLossMPDOut <- subset(OneContinent, MPDOutPvalue <= 0.05)
-LessGainMPDIn <- subset(OneContinent, MPDInPvalue <= 0.05)
+LessLossMPDOut <- subset(OneContinent, MPDOutPvalue <= 0.2)
+LessGainMPDIn <- subset(OneContinent, MPDInPvalue <= 0.2)
 LessLossMPDOutLessGainMPDIn <- merge(LessLossMPDOut,LessGainMPDIn,by=c("x","y"))
 LessLossMPDOutLessGainMPDInArea <- sum(LessLossMPDOutLessGainMPDIn$Area_km.x)
 LessLossMPDOutLessGainMPDInPerc <- nrow(LessLossMPDOutLessGainMPDIn)/(TotalCellsContinent/100)
