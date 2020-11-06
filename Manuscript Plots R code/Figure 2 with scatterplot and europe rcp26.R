@@ -21,7 +21,7 @@ library(colorspace)
 
 # #-#-# Get the results from the analysi and assemble the dataframe #-#-#
 # setwd("/Users/alkevoskamp/Documents/PD manuscript/")
-# RPDchange <- read.csv("PDandMPD_random_changes_disp1_rcp26_2080_RC_Final.csv")
+# RPDchange <- read.csv("PDandMPD_random_changes_disp2_rcp26_2080_RC_Final.csv")
 # head(RPDchange)
 # str(RPDchange)
 # 
@@ -194,9 +194,13 @@ plot(PDscatter)
 min(CombCon$PDpropChange,na.rm = T)
 max(CombCon$PDpropChange,na.rm = T)
 
+bl1 <- colorRampPalette(rev(c("#08306B","#08519C","#2171B5","#4292C6","#9ECAE1","#DEEBF7")))(197) 
+re1 <- colorRampPalette(rev(c("#FFEDA0","#FEB24C","#FC4E2A","#E31A1C","#800026")))(57) 
+wi1 <- colorRampPalette(rev(c("#FFFFCC")))(4)
+
 PDplot<- ggplot(data=CombCon, aes(y=y, x=x)) +
   geom_raster(aes(fill =  PDpropChange), stat = "identity", position = "identity")+
-  scale_fill_gradientn("PD\n%change",colours=c(re1,wi1,bl1),limits=c(-72,202))+ # Insert colour and set range #-72,100
+  scale_fill_gradientn("PD\n%change",colours=c(re1,wi1,bl1),limits=c(-59,199))+ # Insert colour and set range #-72,100
   borders("world",  xlim = c(-180, 180), ylim = c(-60,90), lwd=0.3, colour ="black")+
   geom_segment(aes(x=-180,xend=180,y=0,yend=0),colour="black",linetype="dashed")+ #Add shortened equator line 
   theme(legend.position = c(0.1, 0.2))+ # Positioning the legend 
@@ -216,7 +220,7 @@ print(PDplot)
 #-#-# Map PD change Europe #-#-#
 PDEurope <- ggplot(data=CombCon, aes(y=y, x=x)) +
   geom_raster(aes(fill =  PDpropChange), stat = "identity", position = "identity")+
-  scale_fill_gradientn("PD\n%change",colours=c(re1,wi1,bl1),limits=c(-72,202))+
+  scale_fill_gradientn("PD\n%change",colours=c(re1,wi1,bl1),limits=c(-59,199))+
   borders("world",  xlim = c(-10, 40), ylim = c(35,70), lwd=0.3, colour ="black")+
   coord_cartesian(xlim = c(-10, 40), ylim = c(35, 70))+ #Set the plot extent
   geom_segment(aes(x=-180,xend=180,y=0,yend=0),colour="black",linetype="dashed")+ #Add shortened equator line 
@@ -260,14 +264,14 @@ plot(MPDscatter)
 min(CombCon$MPDpropChange,na.rm = T)
 max(CombCon$MPDpropChange,na.rm = T)
 
-bl1 <- colorRampPalette(rev(c("#08306B","#08519C","#2171B5","#4292C6","#9ECAE1","#DEEBF7")))(45.41)
-re1 <- colorRampPalette(rev(c("#FFEDA0","#FEB24C","#FC4E2A","#E31A1C","#800026")))(21.86) 
+bl1 <- colorRampPalette(rev(c("#08306B","#08519C","#2171B5","#4292C6","#9ECAE1","#DEEBF7")))(45)
+re1 <- colorRampPalette(rev(c("#FFEDA0","#FEB24C","#FC4E2A","#E31A1C","#800026")))(21) 
 wi1 <- colorRampPalette(rev(c("#FFFFCC")))(2)
 
 
 MPDplot<- ggplot(data=CombCon, aes(y=y, x=x)) +
   geom_raster(aes(fill =  MPDpropChange), stat = "identity", position = "identity")+
-  scale_fill_gradientn("MPD\n%change",colours=c(re1,wi1,bl1),limits=c(-21.86,45.41))+ # Insert colour and set range #-72,100
+  scale_fill_gradientn("MPD\n%change",colours=c(re1,wi1,bl1),limits=c(-22,46))+ # Insert colour and set range #-72,100
   borders("world",  xlim = c(-180, 180), ylim = c(-60,90), lwd=0.3, colour ="black")+
   geom_segment(aes(x=-180,xend=180,y=0,yend=0),colour="black",linetype="dashed")+ #Add shortened equator line 
   theme(legend.position = c(0.1, 0.2))+ # Positioning the legend 
@@ -287,7 +291,7 @@ print(MPDplot)
 #-#-# Map PD change Europe #-#-#
 MPDEurope <- ggplot(data=CombCon, aes(y=y, x=x)) +
   geom_raster(aes(fill =  MPDpropChange), stat = "identity", position = "identity")+
-  scale_fill_gradientn("MPD\n%change",colours=c(re1,wi1,bl1),limits=c(-21.86,45.41))+
+  scale_fill_gradientn("MPD\n%change",colours=c(re1,wi1,bl1),limits=c(-22,46))+
   borders("world",  xlim = c(-10, 40), ylim = c(35,70), lwd=0.3, colour ="black")+
   coord_cartesian(xlim = c(-10, 40), ylim = c(35, 70))+ #Set the plot extent
   geom_segment(aes(x=-180,xend=180,y=0,yend=0),colour="black",linetype="dashed")+ #Add shortened equator line 
