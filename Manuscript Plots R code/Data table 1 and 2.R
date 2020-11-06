@@ -6,7 +6,8 @@
 
 
 #-#-# Get the dataframe #-#-#
-data <- read.csv("PDandMPD_random_changes_disp2_rcp60_2080_Final.csv")
+setwd("/Users/alkevoskamp/Documents/PD manuscript/Data for plots/")
+data <- read.csv("PDandMPD_random_changes_disp1_rcp60_2080_Final.csv")
 head(data)
 
 
@@ -40,8 +41,8 @@ TotalArea <- sum(CombCon$Area_km)
 TotalCells <- nrow(CombCon)
 
 ## Set the Risk categorie and continent
-c <-  "South America" #"North America" "Europe" "Australia" "Asia" "Africa"                               
-r <-   "Increasing diversification" #"Increasing overdispersion" "Increasing competition" "Increasing homogenisation"                
+c <-  "South America" #"North America" "Europe" "Australia" "Asia" "Africa"                                             
+r <-   "Increasing diversification" #"Increasing overdispersion" "Increasing competition" "Increasing homogenisation"                    
 
 ## Subset by one continent and category to get table values
 #OneContinent <- subset(CombCon,Continent == "Africa"|Continent == "Asia"|Continent == "Australia"|Continent == "Europe"|Continent == "North America"|Continent == "South America")
@@ -72,7 +73,7 @@ head(RiskCat)
 nrow(RiskCat)
 
 ## Set the continent
-c <- "North America" #"South America" "Europe" "Australia" "Asia" "Africa"  
+c <- "South America" #"North America" # "Europe" "Australia" "Asia" "Africa" "South America"           
 OneContinent <- subset(RiskCat,Continent == c)  
 #OneContinent <- subset(RiskCat,Continent == "Africa"|Continent == "Asia"|Continent == "Australia"|Continent == "Europe"|Continent == "North America"|Continent == "South America")
 TotalCellsContinent <- nrow(OneContinent)
