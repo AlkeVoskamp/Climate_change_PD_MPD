@@ -244,7 +244,7 @@ CombNull <- arrangeGrob(plot1,legendPlot1,plot2,legendPlot2,plot3,legendPlot3,pl
 plot(CombNull)
 
 
-setwd("/Users/alkevoskamp/Documents/PD manuscript/Manuscript Figures/")
+setwd("/Users/alkevoskamp/Documents/PD manuscript/Drafts/1st submission/Figures/Supplements/")
 ggsave("Spp Figure 7 Random_PD and_MPD_change_rcp60_significant_cells_low_disp.tiff",CombNull,width=35, height=13, unit="in", dpi=300, bg="transparent")
 #ggsave("Spp Figure 4 Random_PD and_MPD_change_rcp60_significant_cellsLow_disp.png",CombNull,width=24, height=13, unit="in", dpi=600, bg="transparent")
 
