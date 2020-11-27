@@ -234,7 +234,7 @@ plot(legendPlot4)
 
 #-#-# Combine plot random PD loss and gain #-#-#  
 CombNull <- arrangeGrob(plot1,legendPlot1,plot2,legendPlot2,plot3,legendPlot3,plot4,legendPlot4,
-                        widths = c(4,1.1,4,1.1),
+                        widths = c(4,1.2,4,1.2),
                         heights = c(0.3,0.3),
                         ncol = 4,
                         nrow = 2)
