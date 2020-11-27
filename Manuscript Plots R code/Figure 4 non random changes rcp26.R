@@ -81,7 +81,7 @@ bl1 <- colorRampPalette(rev(c("lightskyblue","royalblue","navy")))(551)  #931.3 
 re1 <- colorRampPalette(rev(c("darkred","red2","mistyrose")))(536)       #1026.5   538
 out <- ggplot(data=PDRLoss, aes(y=y, x=x)) +
   geom_raster(aes(fill =  PDOutvsROut), stat = "identity", position = "identity", hjust = 0, vjust = 0, interpolate = FALSE,)+
-  scale_fill_gradientn("Projected PD change\n - random PD change\n",colours=c(bl1,wi1,re1),limits=c(-553,538),breaks=c(-553,538),labels=c("Stronger decrease\n than random","Weaker decrease\n than random"))+ # Insert colour and set range
+  scale_fill_gradientn("Projected PD change\n - random PD change\n",colours=c(bl1,wi1,re1),limits=c(-553,538),breaks=c(-553,538),labels=c("Weaker decrease\n than random","Stronger decrease\n than random"))+ # Insert colour and set range
   theme(legend.position = c(0.5, 0.6))+ # Positioning the legend <- needs to run with legend position to extract legend  
   theme(legend.text=element_text(size=23),legend.title=element_text(size=28))+ # Change font size legend
   theme(legend.key.size = unit(0.5, "cm"),legend.key.height = unit(0.5, "cm")) # Change size of legend key
