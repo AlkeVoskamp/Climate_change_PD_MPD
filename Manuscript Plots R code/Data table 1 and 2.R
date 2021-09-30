@@ -6,57 +6,105 @@
 
 
 #-#-# Get the dataframe #-#-#
-setwd("/Users/alkevoskamp/Documents/PD manuscript/Data for plots/")
-data <- read.csv("PDandMPD_random_changes_disp1_rcp60_2080_Final.csv")
+setwd("/Users/alkevoskamp/Documents/PD manuscript/Data for plots/Data for tables/")
+data <- read.csv("PDandMPD_random_changes_medium_dispersal_rcp26_2080_ass_str.csv")
 head(data)
 
 
 #-#-# Merge area in km into the data frame #-#-#
-setwd("/Users/alkevoskamp/Documents/PD manuscript/Data for plots/")
+setwd("/Users/alkevoskamp/Documents/PD manuscript/Data for plots/Support files/")
 Area <- read.csv("Area in km per grid cell.csv")
 head(Area)
 
 CombCon <- merge(data,Area,by=c("x","y"))
 head(CombCon)
 
-
-#-#-# Add increase / decrease categories #-#-#
-CombCon$Risk[CombCon$PDpropChange >= 0 & CombCon$MPDpropChange >= 0] <- "MPDincrease/PDincrease"
-CombCon$Risk[CombCon$PDpropChange >= 0 & CombCon$MPDpropChange <= 0] <- "MPDdecrease/PDincrease"
-CombCon$Risk[CombCon$PDpropChange <= 0 & CombCon$MPDpropChange <= 0] <- "MPDdecrease/PDdecrease"
-CombCon$Risk[CombCon$PDpropChange <= 0 & CombCon$MPDpropChange >= 0] <- "MPDincrease/PDdecrease"
-
-CombCon$Risk_categories <- 0
-
-CombCon$Risk_categories[CombCon$Risk == "MPDincrease/PDincrease"] <- "Increasing diversification"
-CombCon$Risk_categories[CombCon$Risk == "MPDdecrease/PDincrease"] <- "Increasing competition"
-CombCon$Risk_categories[CombCon$Risk == "MPDdecrease/PDdecrease"] <- "Increasing homogenisation"
-CombCon$Risk_categories[CombCon$Risk == "MPDincrease/PDdecrease"] <- "Increasing overdispersion"
-
-head(CombCon)
-
-
 #-#-# Calculate values for Risk table #-#-#
 TotalArea <- sum(CombCon$Area_km)
 TotalCells <- nrow(CombCon)
 
 ## Set the Risk categorie and continent
-c <-  "South America" #"North America" "Europe" "Australia" "Asia" "Africa"                                             
-r <-   "Increasing diversification" #"Increasing overdispersion" "Increasing competition" "Increasing homogenisation"                    
+continent <-  c("Europe","Australia","Asia","Africa","South America","North America")                                         
+risk <-   c("Increasing homogenisation","No significant change","Increasing diversification","Increasing overdispersion","Increasing clustering")               
 
-## Subset by one continent and category to get table values
-#OneContinent <- subset(CombCon,Continent == "Africa"|Continent == "Asia"|Continent == "Australia"|Continent == "Europe"|Continent == "North America"|Continent == "South America")
-OneContinent <- subset(CombCon,Continent == c)
-TotalCellsContinent <- nrow(OneContinent)
+## Subset by continent and risk category to get table values
+Continent <- lapply(continent, function(c){
+  
+  print(c)
 
-ContinentIncDiv <- subset(OneContinent,Risk_categories == r)
-TotalAreaContinent <- sum(ContinentIncDiv$Area_km)
-TotalCellsContinentRC <- nrow(ContinentIncDiv)
+  OneContinent <- subset(CombCon,Continent == c)
+  TotalCellsContinent <- nrow(OneContinent)
+  TotalAreaContinent <- sum(OneContinent$Area_km)
+  
+  Risk <- lapply(risk, function(r){
 
-PercAreaContinent <- TotalCellsContinentRC/(TotalCellsContinent/100)
+    ContinentRiskCat <- subset(OneContinent,Risk_cat_final == r)
+    TotalAreaContinentRC <- sum(ContinentRiskCat$Area_km)
+    TotalCellsContinentRC <- nrow(ContinentRiskCat)
 
-print(TotalAreaContinent)
-print(PercAreaContinent)
+    PercCellsContinent <- TotalCellsContinentRC/(TotalCellsContinent/100)
+    PercAreaContinent <- TotalAreaContinentRC/(TotalAreaContinent/100)
+ 
+    riskdata <- as.data.frame(cbind(PercCellsContinent,PercAreaContinent))
+    riskdata$Risk <- r
+    
+    riskdata$TotalAreaContinentRC <- TotalAreaContinentRC
+    riskdata$TotalCellsContinentRC <- TotalCellsContinentRC
+    
+    return(riskdata)
+    
+  })
+   
+  allriskdata <- as.data.frame(do.call(rbind,Risk))
+  allriskdata$Continent <- c
+  allriskdata$TotalAreaContinent <- TotalAreaContinent
+  allriskdata$TotalCellsContinent <- TotalCellsContinent
+
+  return(allriskdata)
+  
+})
+  
+AllData <- as.data.frame(do.call(rbind,Continent))
+
+setwd("/Users/alkevoskamp/Documents/PD manuscript/Data for plots/Data for tables/")
+write.csv(AllData,"Low_dispersal_rcp60_2080_ass_str_Summary.csv")
+
+
+## Get global numbers
+GlobalIncHom <- subset(CombCon,Risk_cat_final == "Increasing homogenisation")
+GlobalIncHomArea <- sum(GlobalIncHom$Area_km)
+GlobalNoSig <- subset(CombCon,Risk_cat_final == "No significant change") 
+GlobalNoSigArea <- sum(GlobalNoSig$Area_km)
+GlobalIncDiv <- subset(CombCon,Risk_cat_final == "Increasing diversification") 
+GlobalIncDivArea <- sum(GlobalIncDiv$Area_km)
+GlobalIncOv <- subset(CombCon,Risk_cat_final == "Increasing overdispersion") 
+GlobalIncOvArea <- sum(GlobalIncOv$Area_km)
+GlobalIncClu <- subset(CombCon,Risk_cat_final == "Increasing clustering") 
+GlobalIncCluArea <- sum(GlobalIncClu$Area_km)
+
+GlobalIncHomPerc <- GlobalIncHomArea/(TotalArea/100)
+GlobalNoSigPerc <- GlobalNoSigArea/(TotalArea/100)
+GlobalIncDivPerc <- GlobalIncDivArea/(TotalArea/100)
+GlobalIncOvPerc <- GlobalIncOvArea/(TotalArea/100)
+GlobalIncCluPerc <- GlobalIncCluArea/(TotalArea/100)
+
+GlobalIncHomPerc
+GlobalNoSigPerc
+GlobalIncDivPerc
+GlobalIncOvPerc
+GlobalIncCluPerc
+
+sum(GlobalIncHomPerc,GlobalNoSigPerc,GlobalIncDivPerc,GlobalIncOvPerc,GlobalIncCluPerc)
+
+GlobalIncHomArea
+GlobalNoSigArea
+GlobalIncDivArea
+GlobalIncOvArea
+GlobalIncCluArea
+
+sum(GlobalIncHomArea,GlobalNoSigArea,GlobalIncDivArea,GlobalIncOvArea,GlobalIncCluArea)
+sum(CombCon$Area_km)
+
 
 
 #-#-# Calculate values for non-random table #-#-#
